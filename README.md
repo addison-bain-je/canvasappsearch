@@ -52,3 +52,19 @@ Filter(
     )
 )
 ```
+
+
+Wildcard * Character Search\
+For the Items property in the gallery:
+```
+Switch(true,
+And(
+    IsBlank(Find("*",SearchInput2.Text)),
+        !IsBlank(SearchInput2.Text)), Filter(Collection1,SearchInput2.Text in Product),  
+
+IsBlank(SearchInput2.Text),Collection1, //if search is empty, display full collection
+(Find("*",SearchInput2.Text) = 1),
+    Filter(Collection1, Lower(Mid(SearchInput2.Text,2, Len(SearchInput2.Text)-1)) in Mid(Product,1,Len(SearchInput2.Text)-1)),
+(Find("*",SearchInput2.Text) > 1),
+    Filter(Collection1, Lower(Mid(SearchInput2.Text, 1,Len(SearchInput2.Text)-1)) in Lower(Mid(Product,Len(Product) - Find("*", SearchInput2.Text,1)+2,Len(SearchInput2.Text)-1))))
+```
